@@ -1,7 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"net/http"
+)
 
 func main() {
-	fmt.Println("Hello world!")
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
+			"status": "success",
+			"data":   "Hello, world",
+		})
+	})
 }
